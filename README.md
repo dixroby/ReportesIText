@@ -7,4 +7,5 @@ Primero, vas a crear un nuevo proyecto de Asp NET Core Web Api con .NET 8. SI no
 Segundo, debes instalar 2 paquetes NuGet en el proyecto. Si aún no lo has hecho, puedes agregarlo mediante NuGet con el siguiente comando:
 
 > dotnet add package itext7.pdfhtml
+
 > dotnet add package itext7.bouncy-castle-adapter
