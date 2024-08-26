@@ -1,0 +1,140 @@
+﻿@using System
+@using System.Collections.Generic
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+        }
+
+            header h1 {
+                margin: 0;
+            }
+
+        nav {
+            display: none;
+        }
+
+            nav ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+            }
+
+            nav li {
+                margin-right: 1rem;
+            }
+
+            nav a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+        main {
+            padding: 2rem;
+            text-align: justify;
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Factura</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Productos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        @if (Model != null)
+        {
+            <p>Cliente: @Model.CustomerName</p>
+
+            <table>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Description</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitPrice.ToString("C")</td>
+                        <td>@item.Total.ToString("C")</td>
+                    </tr>
+                }
+
+                <tr class="total">
+                    <td colspan="3">Total</td>
+                    <td>$@Model.Items.Sum(x => x.Total)</td>
+                </tr>
+            </table>
+            <p>Fecha de emisión: @DateTime.Today.ToString("dd/MM/yyyy")</p>
+        }
+        else
+        {
+            <p>No se encontró información de la factura.</p>
+        }
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Empresa SA. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+
+@code {
+    [Parameter]
+    public InvoiceTemplateModel Model { get; set; }
+}
